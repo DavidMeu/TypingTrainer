@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.text.Text;
+import javafx.scene.control.Spinner;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -25,6 +26,11 @@ public class Controller implements Initializable {
     private Label displayUsername;
 
     @FXML
+    private Label wordsAmount;
+    @FXML
+    private Spinner<Integer> wordsAmountSpin;
+
+    @FXML
     private Text total;
     @FXML
     private Text wpm;
@@ -33,7 +39,6 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         File newFile = new File("username.txt");
         if (newFile.length() != 0) {
             Scanner reader = null;
