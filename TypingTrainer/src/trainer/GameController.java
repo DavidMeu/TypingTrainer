@@ -1,9 +1,8 @@
 package trainer;
-import com.github.dhiraj072.randomwordgenerator.RandomWordGenerator;
+import java.util.Scanner;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -32,8 +31,6 @@ public class GameController extends Controller {
     ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
 
     @FXML
-    private Text wordsLeft;
-    @FXML
     public Text seconds;
     @FXML
     private Text wordsPerMin;
@@ -58,13 +55,12 @@ public class GameController extends Controller {
     ArrayList<String> words = new ArrayList<>();
 
     // add words to array list
-    public void addToList() {
-        for (int i = 0; i < Controller.wordsAmountSpinner.getValue(); i++) {
-            String randWord = RandomWordGenerator.getRandomWord();
-            if(randWord.contains(" ")){
-                randWord = randWord.substring(0, randWord.indexOf(" "));
-            }
-            words.add(randWord);
+    public void addToList() throws IOException {
+        String urlString = "http://web.stanford.edu/class/archive/cs/cs106l/cs106l.1102/assignments/dictionary.txt";
+        URL url = new URL(urlString);
+        Scanner scannerWords = new Scanner(url.openStream());
+        while (scannerWords.hasNextLine()) {
+            words.add(scannerWords.nextLine());
         }
     }
 
@@ -79,8 +75,11 @@ public class GameController extends Controller {
         playAgain.setVisible(false);
         playAgain.setDisable(true);
         seconds.setText("60");
-        wordsLeft.setText(String.valueOf(Controller.wordsAmountSpinner.getValue()));
-        addToList();
+        try {
+            addToList();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Collections.shuffle(words);
         programWord.setText(words.get(wordCounter));
         secondProgramWord.setText(words.get(wordCounter+1));
@@ -213,8 +212,6 @@ public class GameController extends Controller {
             if (s.equals(real)) {
                 counter++;
                 wordsPerMin.setText(String.valueOf(counter));
-                wordsLeft.setText(String.valueOf(Integer.parseInt(wordsLeft.getText())-1));
-                words.remove(real);
                 Thread t = new Thread(fadeCorrect);
                 t.start();
 
@@ -229,6 +226,5 @@ public class GameController extends Controller {
             secondProgramWord.setText(words.get(wordCounter+1));
             wordCounter++;
         }
-
     }
 }

@@ -68,16 +68,5 @@
             </image>
         </ImageView>
         <Button fx:id="playAgain" layoutX="273.0" layoutY="351.0" mnemonicParsing="false" onAction="#toMainMenu" text="Play again" />
-      <Circle fill="WHITE" layoutX="89.0" layoutY="94.0" radius="39.0" stroke="#ffc947" strokeType="INSIDE" strokeWidth="3.0" />
-      <Text layoutX="73.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="words">
-         <font>
-            <Font name="Calibri" size="13.0" />
-         </font>
-      </Text>
-      <Text fx:id="wordsLeft" layoutX="68.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="42.64990234375">
-         <font>
-            <Font name="Calibri" size="31.0" />
-         </font>
-      </Text>
     </children>
 </AnchorPane>

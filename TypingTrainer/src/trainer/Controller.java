@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.scene.control.Spinner;
 
@@ -23,16 +24,15 @@ import java.util.Scanner;
 
 public class Controller implements Initializable {
 
-    @FXML
-    private Label timeLabel;
+    private String username;
+
     @FXML
     private Label displayUsername;
 
     @FXML
-    private Label wordsAmount;
+    private Label userLabel;
     @FXML
-    private Spinner<Integer> wordsAmountSpin;
-    public static Spinner<Integer> wordsAmountSpinner;
+    private TextField userName;
 
     @FXML
     private Text total;
@@ -44,29 +44,12 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Controller.wordsAmountSpinner = wordsAmountSpin;
-        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,100, 10);
-        Controller.wordsAmountSpinner.setValueFactory(valueFactory);
 
-        File newFile = new File("username.txt");
-        if (newFile.length() != 0) {
-            Scanner reader = null;
-            try {
-                reader = new Scanner(newFile);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            String data = reader.nextLine();
-            displayUsername.setText("Welcome, "+data);
-
-        }
         // set the day
         Date date = new Date();
         Locale locale = new Locale("en");
         DateFormat formatter = new SimpleDateFormat("EEEE", locale);
         String strDay = formatter.format(date);
-
-        timeLabel.setText("Today is " + strDay);
 
         // we need to display data
         int[] data = FileHandling.sumUpNumbers("src/data");
@@ -78,17 +61,24 @@ public class Controller implements Initializable {
     public void playGame(ActionEvent ea) throws IOException {
         Main m = new Main();
 
-        File newFile = new File("username.txt");
-        if (newFile.length() == 0) {
-            try {
-                m.changeScene("popup.fxml");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        username = userName.getText().trim();
+        if (username.isEmpty()) {
+            userLabel.setText("You must enter a username!");
+            userLabel.setStyle("-fx-text-fill: red;");
         }
         else {
             m.changeScene("game.fxml");
         }
 
     }
+
+    public void getUserStatistics(ActionEvent ea) throws IOException {
+        username = userName.getText().trim();
+        if (username.isEmpty()) {
+            userLabel.setText("You must enter a username!");
+            userLabel.setStyle("-fx-text-fill: red;");
+        }
+
+    }
+
 }
