@@ -2,8 +2,8 @@ package trainer;
 import com.github.dhiraj072.randomwordgenerator.RandomWordGenerator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -21,7 +21,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class GameController implements Initializable {
+public class GameController extends Controller {
 
 
     private int wordCounter = 0;
@@ -31,7 +31,8 @@ public class GameController implements Initializable {
 
     ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
 
-
+    @FXML
+    private Text wordsLeft;
     @FXML
     public Text seconds;
     @FXML
@@ -58,27 +59,13 @@ public class GameController implements Initializable {
 
     // add words to array list
     public void addToList() {
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < Controller.wordsAmountSpinner.getValue(); i++) {
             String randWord = RandomWordGenerator.getRandomWord();
             if(randWord.contains(" ")){
                 randWord = randWord.substring(0, randWord.indexOf(" "));
             }
             words.add(randWord);
         }
-/*        BufferedReader reader;
-        try {
-            reader = new BufferedReader(new
-                    FileReader("wordsList"));
-            String line = reader.readLine();
-            while (line != null) {
-                words.add(line);
-                // read next line
-                line = reader.readLine();
-            }
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
     }
 
     public void toMainMenu(ActionEvent ae) throws IOException {
@@ -92,6 +79,7 @@ public class GameController implements Initializable {
         playAgain.setVisible(false);
         playAgain.setDisable(true);
         seconds.setText("60");
+        wordsLeft.setText(String.valueOf(Controller.wordsAmountSpinner.getValue()));
         addToList();
         Collections.shuffle(words);
         programWord.setText(words.get(wordCounter));
@@ -225,7 +213,8 @@ public class GameController implements Initializable {
             if (s.equals(real)) {
                 counter++;
                 wordsPerMin.setText(String.valueOf(counter));
-
+                wordsLeft.setText(String.valueOf(Integer.parseInt(wordsLeft.getText())-1));
+                words.remove(real);
                 Thread t = new Thread(fadeCorrect);
                 t.start();
 

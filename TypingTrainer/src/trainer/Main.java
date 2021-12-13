@@ -14,7 +14,7 @@ public class Main extends Application {
     private static Stage stg;
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         stg = primaryStage;
         primaryStage.setResizable(false);
         Parent root = FXMLLoader.load(getClass().getResource("trainer.fxml"));

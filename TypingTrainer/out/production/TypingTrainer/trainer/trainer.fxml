@@ -81,7 +81,7 @@
                         <Image url="@../images/icon.png" />
                     </image>
                 </ImageView>
-            <Spinner fx:id="wordsAmountSpin" min="0" max="1000" initialValue="10" layoutX="371.0" layoutY="150.0" prefHeight="25.0" prefWidth="70.0" />
+            <Spinner fx:id="wordsAmountSpin" editable="true" layoutX="371.0" layoutY="150.0" prefHeight="25.0" prefWidth="70.0" />
             <Label fx:id="wordsAmount" layoutX="163.0" layoutY="145.0" prefHeight="35.0" prefWidth="194.0" style="-fx-alignment: center;" text="Words Amount:" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Calibri" size="30.0" />
@@ -89,4 +89,5 @@
             </Label>
             </children></Pane>
     </children>
+    <!--<fx:include source="game.fxml" fx:id="gameController" />-->
 </GridPane>
