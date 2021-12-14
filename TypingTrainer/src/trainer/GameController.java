@@ -1,4 +1,5 @@
 package trainer;
+import java.sql.SQLException;
 import java.util.Scanner;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,6 +26,8 @@ public class GameController extends Controller {
 
     private int wordCounter = 0;
     private int first = 1;
+    private int timer = 10;
+    private DBController dbController;
 
     private File saveData;
 
@@ -72,9 +75,14 @@ public class GameController extends Controller {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        try {
+            dbController = DBController.getInstance();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         playAgain.setVisible(false);
         playAgain.setDisable(true);
-        seconds.setText("60");
+        seconds.setText(String.valueOf(timer));
         try {
             addToList();
         } catch (IOException e) {
@@ -101,8 +109,6 @@ public class GameController extends Controller {
         }
 
     }
-
-    private int timer = 60;
 
     Runnable r = new Runnable() {
         @Override
