@@ -2,20 +2,24 @@ package trainer;
 
 import java.sql.*;
 import java.lang.Class;
+import java.util.stream.IntStream;
 
 public class DBController {
     private static DBController instance;
     private Connection connection;
     private final String url = "jdbc:postgresql://localhost:5432/TrypingTrainer";
     private final String username = "postgres";
-    private final String password = "";
+    private final String password = "Dmpost";
     private PreparedStatement ps;
 
     // tables queries
     private String Users = "CREATE TABLE IF NOT EXISTS users (username varchar(45) NOT NULL primary key)";
     private String Statistics = "CREATE TABLE IF NOT EXISTS statistics" +
             " (username varchar(45) NOT NULL references users(username), total_words int DEFAULT 0," +
-            " avg int DEFAULT 0, invalid int DEFAULT 0, game_counter int DEFAULT 0)";
+            " correct_words int DEFAULT 0, invalid_words int DEFAULT 0, game_counter int DEFAULT 0)";
+
+    //Current user
+    private String currentUser;
 
     private DBController() throws SQLException {
         try {
@@ -54,7 +58,12 @@ public class DBController {
             ps.setObject(1, username);
             ps.executeUpdate();
         }
+        this.currentUser = username;
         return username;
+    }
+
+    public String getCurrentUser(){
+        return this.currentUser;
     }
 
     public int[] getUserStatistics(String username) throws SQLException {
@@ -73,10 +82,25 @@ public class DBController {
             userStatistics.next();
         }
         return new int[] {userStatistics.getInt("total_words"),
-                userStatistics.getInt("avg"),
-                userStatistics.getInt("invalid"),
+                userStatistics.getInt("correct_words"),
+                userStatistics.getInt("invalid_words"),
                 userStatistics.getInt("game_counter")};
 
+    }
+
+    public void saveUserRes(String username, int[] res) throws SQLException {
+        int[] currentRes = this.getUserStatistics(username);
+        int[] newRes = IntStream.range(0, currentRes.length)
+                .map(i -> currentRes[i] + res[i])
+                .toArray();
+        ps = this.connection.prepareStatement("UPDATE statistics SET" +
+                " total_words=?, correct_words=?, invalid_words=?, game_counter=? WHERE username=?");
+        ps.setObject(1, newRes[0]);
+        ps.setObject(2, newRes[1]);
+        ps.setObject(3, newRes[2]);
+        ps.setObject(4, newRes[3]);
+        ps.setObject(5, username);
+        ps.executeUpdate();
     }
 }
 

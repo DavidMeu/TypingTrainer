@@ -94,20 +94,6 @@ public class GameController extends Controller {
         wordCounter++;
 
 
-        Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
-        saveData = new File("src/data/"+formatter.format(date).strip()+".txt");
-
-        try {
-            if (saveData.createNewFile()) {
-                System.out.println("File created: " + saveData.getName());
-            } else {
-                System.out.println("File already exists.");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
     }
 
     Runnable r = new Runnable() {
@@ -122,18 +108,14 @@ public class GameController extends Controller {
                 if (timer == -1) {
                     userWord.setDisable(true);
                     userWord.setText("Game over");
-
+                    String currentUser = dbController.getCurrentUser();
+                    int[] resArray = {countAll, counter, countAll-counter, 1};
                     try {
-                        FileWriter myWriter = new FileWriter(saveData);
-                        myWriter.write(countAll +";");
-                        myWriter.write(counter +";");
-                        myWriter.write(String.valueOf(countAll-counter));
-                        myWriter.close();
-                    } catch (IOException e) {
+                        dbController.saveUserRes(currentUser, resArray);
+                    } catch (SQLException e) {
                         e.printStackTrace();
                     }
                 }
-
                 if (timer == -4) {
                     playAgain.setVisible(true);
                     playAgain.setDisable(false);
