@@ -2,6 +2,9 @@ package trainer;
 
 import java.sql.*;
 import java.lang.Class;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.IntStream;
 
 public class DBController {
@@ -54,7 +57,12 @@ public class DBController {
         ResultSet user = ps.executeQuery();
         if (!user.next())
         {
+            //Init user
             ps = this.connection.prepareStatement("INSERT INTO users(username) VALUES (?)");
+            ps.setObject(1, username);
+            ps.executeUpdate();
+            //Init user statistics
+            ps = this.connection.prepareStatement("INSERT INTO statistics(username) VALUES (?)");
             ps.setObject(1, username);
             ps.executeUpdate();
         }
@@ -66,21 +74,21 @@ public class DBController {
         return this.currentUser;
     }
 
+    public List<String> getUsers() throws SQLException {
+        List<String> usersRes = new ArrayList<>();
+        ps = this.connection.prepareStatement("SELECT username FROM users");
+        ResultSet users = ps.executeQuery();
+        while (users.next()) {
+            usersRes.add(users.getString("username"));
+        }
+        return usersRes;
+    }
+
     public int[] getUserStatistics(String username) throws SQLException {
-        this.getUser(username);
         ps = this.connection.prepareStatement("SELECT * FROM statistics WHERE username=?");
         ps.setObject(1, username);
         ResultSet userStatistics = ps.executeQuery();
-        if (!userStatistics.next())
-        {
-            ps = this.connection.prepareStatement("INSERT INTO statistics(username) VALUES (?)");
-            ps.setObject(1, username);
-            ps.executeUpdate();
-            ps = this.connection.prepareStatement("SELECT * FROM statistics WHERE username=?");
-            ps.setObject(1, username);
-            userStatistics = ps.executeQuery();
-            userStatistics.next();
-        }
+        userStatistics.next();
         return new int[] {userStatistics.getInt("total_words"),
                 userStatistics.getInt("correct_words"),
                 userStatistics.getInt("invalid_words"),

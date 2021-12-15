@@ -1,6 +1,7 @@
 package trainer;
 import java.sql.SQLException;
-import java.util.Scanner;
+import java.util.*;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -13,10 +14,6 @@ import javafx.scene.text.Text;
 import java.io.*;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -28,8 +25,6 @@ public class GameController extends Controller {
     private int first = 1;
     private int timer = 10;
     private DBController dbController;
-
-    private File saveData;
 
     ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
 
@@ -55,7 +50,7 @@ public class GameController extends Controller {
     @FXML
     private Button playAgain;
 
-    ArrayList<String> words = new ArrayList<>();
+    List<String> words = new ArrayList<>();
 
     // add words to array list
     public void addToList() throws IOException {

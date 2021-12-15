@@ -1,15 +1,12 @@
 package trainer;
+import javafx.scene.control.*;
 import trainer.DBController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Label;
-import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import javafx.scene.control.Spinner;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,10 +17,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.ResourceBundle;
-import java.util.Scanner;
+import java.util.*;
 
 public class Controller implements Initializable {
 
@@ -38,6 +32,8 @@ public class Controller implements Initializable {
     private TextField userName;
 
     @FXML
+    private ComboBox<String> userStat;
+    @FXML
     private Text total;
     @FXML
     private Text wpm;
@@ -49,47 +45,39 @@ public class Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             dbController = DBController.getInstance();
+            List<String> users = dbController.getUsers();
+            userStat.setPromptText("User Statistics");
+            userStat.getItems().addAll(users);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
 
     public void playGame(ActionEvent ea) throws IOException, SQLException {
         Main m = new Main();
 
-        String username = fetchUser(userName.getText().trim());
+        String username = getUser(userName.getText().trim());
         if (!username.isEmpty()){
             m.changeScene("game.fxml");
         }
     }
 
     public void getUserStatistics(ActionEvent ea) throws SQLException {
-        fetchUserStatistics(userName.getText().trim());
-
+        int[] userStatistics = dbController.getUserStatistics(userStat.getValue());
+        //we need to display data
+        total.setText(String.valueOf(userStatistics[0]));
+        wpm.setText(String.valueOf(Math.round(userStatistics[1]*1.0/userStatistics[3])));
+        invalid.setText(String.valueOf(userStatistics[2]));
     }
 
-    public String fetchUser(String username) throws SQLException {
+    public String getUser(String username) throws SQLException {
         if (username.isEmpty()) {
             userLabel.setText("You must enter a username!");
             userLabel.setStyle("-fx-text-fill: red;");
             return username;
         }
         return dbController.getUser(username);
-    }
-
-    public void fetchUserStatistics(String username) throws SQLException {
-        int[] data = new int[4];
-        if (username.isEmpty()) {
-            userLabel.setText("You must enter a username!");
-            userLabel.setStyle("-fx-text-fill: red;");
-        }
-        else {
-            data = dbController.getUserStatistics(username);
-        }
-        //we need to display data
-        total.setText(String.valueOf(data[0]));
-        wpm.setText(String.valueOf(Math.round(data[1]*1.0/data[3])));
-        invalid.setText(String.valueOf(data[2]));
     }
 
 }

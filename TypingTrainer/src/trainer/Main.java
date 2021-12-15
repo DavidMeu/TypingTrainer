@@ -20,7 +20,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("trainer.fxml"));
         primaryStage.setTitle("Type Practice");
         primaryStage.getIcons().add(new Image("images/icon.png"));
-        primaryStage.setScene(new Scene(root, 600, 450));
+        primaryStage.setScene(new Scene(root, 600, 470));
         primaryStage.show();
     }
 
