@@ -16,8 +16,8 @@ public class DBController {
     private PreparedStatement ps;
 
     // tables queries
-    private String Users = "CREATE TABLE IF NOT EXISTS users (username varchar(45) NOT NULL primary key)";
-    private String Statistics = "CREATE TABLE IF NOT EXISTS statistics" +
+    private final String users = "CREATE TABLE IF NOT EXISTS users (username varchar(45) NOT NULL primary key)";
+    private final String usersStatistics = "CREATE TABLE IF NOT EXISTS statistics" +
             " (username varchar(45) NOT NULL references users(username), total_words int DEFAULT 0," +
             " correct_words int DEFAULT 0, invalid_words int DEFAULT 0, game_counter int DEFAULT 0)";
 
@@ -28,11 +28,8 @@ public class DBController {
         try {
             Class.forName("org.postgresql.Driver");
             this.connection = DriverManager.getConnection(url, username, password);
-            ps = this.connection.prepareStatement(Users);
-            ps.executeUpdate();
-            ps = this.connection.prepareStatement(Statistics);
-            ps.executeUpdate();
-
+            this.createUsers();
+            this.createUsersStatistics();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -49,6 +46,26 @@ public class DBController {
             instance = new DBController();
         }
         return instance;
+    }
+
+    public void createUsers() {
+        try {
+            ps = this.connection.prepareStatement(users);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void createUsersStatistics() {
+        try {
+            ps = this.connection.prepareStatement(usersStatistics);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public String getUser(String username) throws SQLException {
