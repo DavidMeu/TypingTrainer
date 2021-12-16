@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
 public class DBController {
     private static DBController instance;
     private Connection connection;
-    private final String url = "jdbc:postgresql://localhost:5432/TrypingTrainer";
+    private final String url = "jdbc:postgresql://localhost:5432/TypingTrainer";
     private final String username = "postgres";
     private final String password = "Dmpost";
     private PreparedStatement ps;
