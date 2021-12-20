@@ -1,11 +1,10 @@
 package trainer;
 
 import java.sql.*;
-import java.lang.Class;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
+import java.util.Date;
 
 public class DBController {
     private static DBController instance;
@@ -16,23 +15,19 @@ public class DBController {
     private PreparedStatement ps;
 
     // tables queries
-    private final String users = "CREATE TABLE IF NOT EXISTS users (username varchar(45) NOT NULL primary key)";
+    private final String users = "CREATE TABLE IF NOT EXISTS users (username varchar(45) NOT NULL primary key, joined_at date NOT NULL)";
     private final String usersStatistics = "CREATE TABLE IF NOT EXISTS statistics" +
             " (username varchar(45) NOT NULL references users(username), total_words int DEFAULT 0," +
-            " correct_words int DEFAULT 0, invalid_words int DEFAULT 0, game_counter int DEFAULT 0)";
+            " correct_words int DEFAULT 0, invalid_words int DEFAULT 0, game_counter int DEFAULT 0, wpm int DEFAULT 0," +
+            " last_train date DEFAULT NULL)";
 
     //Current user
     private String currentUser;
 
     private DBController() throws SQLException {
-        try {
-            Class.forName("org.postgresql.Driver");
-            this.connection = DriverManager.getConnection(url, username, password);
-            this.createUsers();
-            this.createUsersStatistics();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        this.connection = DriverManager.getConnection(url, username, password);
+        this.createUsers();
+        this.createUsersStatistics();
     }
 
     public Connection getConnection() {
@@ -75,7 +70,8 @@ public class DBController {
         if (!user.next())
         {
             //Init user
-            ps = this.connection.prepareStatement("INSERT INTO users(username) VALUES (?)");
+            Date joined = new Date();
+            ps = this.connection.prepareStatement("INSERT INTO users VALUES (?,NOW())");
             ps.setObject(1, username);
             ps.executeUpdate();
             //Init user statistics
@@ -109,23 +105,25 @@ public class DBController {
         return new int[] {userStatistics.getInt("total_words"),
                 userStatistics.getInt("correct_words"),
                 userStatistics.getInt("invalid_words"),
-                userStatistics.getInt("game_counter")};
-
+                userStatistics.getInt("game_counter"),
+                userStatistics.getInt("wpm")
+        };
     }
 
-    public void saveUserRes(String username, int[] res) throws SQLException {
+    public int saveUserRes(String username, int[] res) throws SQLException {
         int[] currentRes = this.getUserStatistics(username);
-        int[] newRes = IntStream.range(0, currentRes.length)
+        int[] newRes = IntStream.range(0, res.length)
                 .map(i -> currentRes[i] + res[i])
                 .toArray();
         ps = this.connection.prepareStatement("UPDATE statistics SET" +
-                " total_words=?, correct_words=?, invalid_words=?, game_counter=? WHERE username=?");
+                " total_words=?, correct_words=?, invalid_words=?, game_counter=?, wpm=?, last_train=NOW()  WHERE username=?");
         ps.setObject(1, newRes[0]);
         ps.setObject(2, newRes[1]);
         ps.setObject(3, newRes[2]);
         ps.setObject(4, newRes[3]);
-        ps.setObject(5, username);
-        ps.executeUpdate();
+        ps.setObject(5, Math.round(newRes[1]*1.0/newRes[3]));
+        ps.setObject(6, username);
+        return ps.executeUpdate();
     }
 }
 

@@ -1,22 +1,13 @@
 package trainer;
+import javafx.beans.binding.Bindings;
 import javafx.scene.control.*;
-import trainer.DBController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.text.Text;
-
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Controller implements Initializable {
@@ -48,6 +39,8 @@ public class Controller implements Initializable {
             List<String> users = dbController.getUsers();
             userStat.setPromptText("User Statistics");
             userStat.getItems().addAll(users);
+
+            displayUsername.textProperty().bind(Bindings.concat("Welcome ").concat(userName.textProperty()));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -63,11 +56,16 @@ public class Controller implements Initializable {
         }
     }
 
-    public void getUserStatistics(ActionEvent ea) throws SQLException {
-        int[] userStatistics = dbController.getUserStatistics(userStat.getValue());
+    public void getUserStatistics(ActionEvent ea) {
+        int[] userStatistics = new int[0];
+        try {
+            userStatistics = dbController.getUserStatistics(userStat.getValue());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         //we need to display data
         total.setText(String.valueOf(userStatistics[0]));
-        wpm.setText(String.valueOf(Math.round(userStatistics[1]*1.0/userStatistics[3])));
+        wpm.setText(String.valueOf(userStatistics[4]));
         invalid.setText(String.valueOf(userStatistics[2]));
     }
 

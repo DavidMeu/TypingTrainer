@@ -18,9 +18,9 @@ public class Main extends Application {
         stg = primaryStage;
         primaryStage.setResizable(false);
         Parent root = FXMLLoader.load(getClass().getResource("trainer.fxml"));
-        primaryStage.setTitle("Type Practice");
+        primaryStage.setTitle("Type Trainer");
         primaryStage.getIcons().add(new Image("images/icon.png"));
-        primaryStage.setScene(new Scene(root, 600, 470));
+        primaryStage.setScene(new Scene(root, 690, 470));
         primaryStage.show();
     }
 

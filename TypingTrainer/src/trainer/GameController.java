@@ -13,7 +13,6 @@ import javafx.scene.text.Text;
 
 import java.io.*;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -23,7 +22,7 @@ public class GameController extends Controller {
 
     private int wordCounter = 0;
     private int first = 1;
-    private int timer = 10;
+    private int timer = 1;
     private DBController dbController;
 
     ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
@@ -50,7 +49,8 @@ public class GameController extends Controller {
     @FXML
     private Button playAgain;
 
-    List<String> words = new ArrayList<>();
+    List<String> words = new ArrayList<String>();
+    private Integer updated;
 
     // add words to array list
     public void addToList() throws IOException {
@@ -60,6 +60,7 @@ public class GameController extends Controller {
         while (scannerWords.hasNextLine()) {
             words.add(scannerWords.nextLine());
         }
+        scannerWords.close();
     }
 
     public void toMainMenu(ActionEvent ae) throws IOException {
@@ -106,7 +107,12 @@ public class GameController extends Controller {
                     String currentUser = dbController.getCurrentUser();
                     int[] resArray = {countAll, counter, countAll-counter, 1};
                     try {
-                        dbController.saveUserRes(currentUser, resArray);
+                        updated = dbController.saveUserRes(currentUser, resArray);
+                        if (updated == 1){
+                            String updatedRes = String.format("Updated %s result!", dbController.getCurrentUser());
+                            secondProgramWord.setVisible(false);
+                            programWord.setText(updatedRes);
+                        }
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }

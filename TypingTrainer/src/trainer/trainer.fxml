@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trainer.Controller">
+<GridPane alignment="center" hgap="10" prefHeight="470.0" prefWidth="681.0" vgap="10" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trainer.Controller">
     <columnConstraints>
         <ColumnConstraints />
     </columnConstraints>
@@ -22,63 +22,63 @@
         <RowConstraints />
     </rowConstraints>
     <children>
-        <Pane prefHeight="470.0" prefWidth="600.0" style="-fx-background-color: #0a1931;">
+        <Pane prefHeight="470.0" prefWidth="690.0" style="-fx-background-color: #0a1931;">
             <children>
-                <Label fx:id="displayUsername" alignment="CENTER" layoutX="167.0" layoutY="14.0" prefHeight="57.0" prefWidth="267.0" text="Welcome!" textAlignment="CENTER" textFill="WHITE">
+                <Label fx:id="displayUsername" alignment="CENTER" layoutX="207.0" layoutY="28.0" prefHeight="57.0" prefWidth="267.0" textAlignment="CENTER" textFill="WHITE">
                     <font>
-                        <Font name="Calibri" size="35.0" />
+                        <Font name="Arial Rounded MT Bold" size="30.0" />
                     </font>
                 </Label>
-                <Button fx:id="playButton" alignment="BOTTOM_LEFT" layoutX="246.0" layoutY="182.0" mnemonicParsing="false" onAction="#playGame" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: #185adb; -fx-cursor: hand;" text="Play" textFill="#ffc947">
+                <Button fx:id="playButton" alignment="BOTTOM_LEFT" layoutX="285.0" layoutY="186.0" mnemonicParsing="false" onAction="#playGame" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: #185adb; -fx-cursor: hand;" text="Play" textFill="#ffc947">
                     <font>
                         <Font name="Calibri" size="23.0" />
                     </font>
                 </Button>
-                <Circle fill="#ffffff00" layoutX="178.0" layoutY="378.0" radius="45.0" stroke="#ffc947" strokeType="INSIDE" strokeWidth="3.0" />
-                <Text fill="WHITE" layoutX="143.0" layoutY="398.0" strokeType="OUTSIDE" strokeWidth="0.0" text="total entered">
+                <Circle fill="#ffffff00" layoutX="227.0" layoutY="378.0" radius="45.0" stroke="#ffc947" strokeType="INSIDE" strokeWidth="3.0" />
+                <Text fill="WHITE" layoutX="192.0" layoutY="398.0" strokeType="OUTSIDE" strokeWidth="0.0" text="total entered">
                     <font>
                         <Font name="Calibri" size="13.0" />
                     </font>
                 </Text>
-                <Text fx:id="total" fill="WHITE" layoutX="148.0" layoutY="374.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="60.30908203125">
+                <Text fx:id="total" fill="WHITE" layoutX="197.0" layoutY="374.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="60.30908203125">
                     <font>
                         <Font name="Calibri" size="36.0" />
                     </font>
                 </Text>
-                <Circle fill="#ffffff00" layoutX="300.0" layoutY="378.0" radius="45.0" stroke="#ffc947" strokeType="INSIDE" strokeWidth="3.0" />
-                <Text fill="WHITE" layoutX="260.0" layoutY="398.0" strokeType="OUTSIDE" strokeWidth="0.0" text="average wpm" textAlignment="CENTER" wrappingWidth="80.30908203125">
+                <Circle fill="#ffffff00" layoutX="341.0" layoutY="378.0" radius="45.0" stroke="#ffc947" strokeType="INSIDE" strokeWidth="3.0" />
+                <Text fill="WHITE" layoutX="301.0" layoutY="398.0" strokeType="OUTSIDE" strokeWidth="0.0" text="average wpm" textAlignment="CENTER" wrappingWidth="80.30908203125">
                     <font>
                         <Font name="Calibri" size="13.0" />
                     </font>
                 </Text>
-                <Text fx:id="wpm" fill="WHITE" layoutX="270.0" layoutY="374.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="60.30908203125">
+                <Text fx:id="wpm" fill="WHITE" layoutX="311.0" layoutY="374.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="60.30908203125">
                     <font>
                         <Font name="Calibri" size="36.0" />
                     </font>
                 </Text>
-                <Circle fill="#ffffff00" layoutX="423.0" layoutY="378.0" radius="45.0" stroke="#ffc947" strokeType="INSIDE" strokeWidth="3.0" />
-                <Text fill="WHITE" layoutX="406.0" layoutY="398.0" strokeType="OUTSIDE" strokeWidth="0.0" text="invalid">
+                <Circle fill="#ffffff00" layoutX="459.0" layoutY="378.0" radius="45.0" stroke="#ffc947" strokeType="INSIDE" strokeWidth="3.0" />
+                <Text fill="WHITE" layoutX="441.0" layoutY="398.0" strokeType="OUTSIDE" strokeWidth="0.0" text="invalid">
                     <font>
                         <Font name="Calibri" size="13.0" />
                     </font>
                 </Text>
-                <Text fx:id="invalid" fill="WHITE" layoutX="393.0" layoutY="374.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="60.30908203125">
+                <Text fx:id="invalid" fill="WHITE" layoutX="428.0" layoutY="374.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="60.30908203125">
                     <font>
                         <Font name="Calibri" size="36.0" />
                     </font>
                 </Text>
-                <ImageView fitHeight="28.0" fitWidth="22.0" layoutX="308.0" layoutY="193.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="28.0" fitWidth="22.0" layoutX="360.0" layoutY="197.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../images/icon.png" />
                     </image>
                 </ImageView>
-            <Label fx:id="userLabel" alignment="CENTER" layoutX="134.0" layoutY="79.0" prefHeight="57.0" prefWidth="331.0" text="Enter Username" textAlignment="CENTER" textFill="WHITE">
+            <Label fx:id="userLabel" alignment="CENTER" layoutX="175.0" layoutY="85.0" prefHeight="57.0" prefWidth="331.0" text="Enter Username" textAlignment="CENTER" textFill="WHITE">
                <font>
-                  <Font name="Calibri" size="24.0" />
+                  <Font name="Arial Rounded MT Bold" size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="userName" layoutX="227.0" layoutY="136.0" />
-            <ComboBox fx:id="userStat" layoutX="213.0" layoutY="431.0" prefHeight="25.0" prefWidth="174.0" onAction="#getUserStatistics"/>
+            <TextField fx:id="userName" layoutX="266.0" layoutY="142.0" />
+            <ComboBox fx:id="userStat" layoutX="254.0" layoutY="431.0" onAction="#getUserStatistics" prefHeight="25.0" prefWidth="174.0" />
             </children></Pane>
     </children>
     <!--<fx:include source="game.fxml" fx:id="gameController" />-->
