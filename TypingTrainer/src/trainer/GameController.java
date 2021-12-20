@@ -50,7 +50,6 @@ public class GameController extends Controller {
     private Button playAgain;
 
     List<String> words = new ArrayList<String>();
-    private Integer updated;
 
     // add words to array list
     public void addToList() throws IOException {
@@ -92,12 +91,11 @@ public class GameController extends Controller {
 
     }
 
-    Runnable r = new Runnable() {
+    Runnable timerRunner = new Runnable() {
         @Override
         public void run() {
             if (timer > -1) {
                 seconds.setText(String.valueOf(timer));
-                timer -= 1;
             }
 
             else {
@@ -107,7 +105,7 @@ public class GameController extends Controller {
                     String currentUser = dbController.getCurrentUser();
                     int[] resArray = {countAll, counter, countAll-counter, 1};
                     try {
-                        updated = dbController.saveUserRes(currentUser, resArray);
+                        int updated = dbController.saveUserRes(currentUser, resArray);
                         if (updated == 1){
                             String updatedRes = String.format("Updated %s result!", dbController.getCurrentUser());
                             secondProgramWord.setVisible(false);
@@ -123,8 +121,8 @@ public class GameController extends Controller {
                     executor.shutdown();
                 }
 
-                timer -= 1;
             }
+            timer -= 1;
         }
     };
 
@@ -188,26 +186,26 @@ public class GameController extends Controller {
         // only gets called once
         if (first == 1) {
             first = 0;
-            executor.scheduleAtFixedRate(r, 0, 1, TimeUnit.SECONDS);
+            executor.scheduleAtFixedRate(timerRunner, 0, 1, TimeUnit.SECONDS);
         }
 
         if (ke.getCode().equals(KeyCode.ENTER)) {
 
-            String s = userWord.getText();
+            String insertedWord = userWord.getText();
             String real = programWord.getText();
             countAll++;
 
             // if correct
-            if (s.equals(real)) {
+            if (insertedWord.equals(real)) {
                 counter++;
                 wordsPerMin.setText(String.valueOf(counter));
-                Thread t = new Thread(fadeCorrect);
-                t.start();
+                Thread correct = new Thread(fadeCorrect);
+                correct.start();
 
             }
             else {
-                Thread t = new Thread(fadeWrong);
-                t.start();
+                Thread wrong = new Thread(fadeWrong);
+                wrong.start();
             }
             userWord.setText("");
             accuracy.setText(String.valueOf(Math.round((counter*1.0/countAll)*100)));

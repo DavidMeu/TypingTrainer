@@ -4,7 +4,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
-import java.util.Date;
 
 public class DBController {
     private static DBController instance;
@@ -70,7 +69,6 @@ public class DBController {
         if (!user.next())
         {
             //Init user
-            Date joined = new Date();
             ps = this.connection.prepareStatement("INSERT INTO users VALUES (?,NOW())");
             ps.setObject(1, username);
             ps.executeUpdate();
