@@ -1,10 +1,15 @@
-# TypingPracticeJava
-Practice Typing App made with Java &amp; JavaFX
-60 seconds to enter as much words as possible
+# TypingTrainer
+Practice Typing App made with Java &amp; JavaFX.
+
+60 seconds to enter as much words as possible.
+
+Using Postgresql as the Backend DB.
+
 Features:
-1) Saves user statistics and displays them accordingly
-2) Shows next word in line
-3) Displays correct and wrong checkbox
-4) Smooth interface
-5) When you start typing, the game starts
+1) Users management
+2) Saves users statistics and displays them accordingly
+4) Shows next word in line
+5) Displays correct and wrong indicators
+6) Best user score
+7) When you start typing, the game starts
 
