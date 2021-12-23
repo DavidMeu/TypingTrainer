@@ -12,10 +12,12 @@ import java.io.IOException;
 public class Main extends Application {
 
     private static Stage stg;
+    private DBController dbController;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         stg = primaryStage;
+        dbController = DBController.getInstance();
         primaryStage.setResizable(false);
         Parent root = FXMLLoader.load(getClass().getResource("trainer.fxml"));
         primaryStage.setTitle("Type Trainer");

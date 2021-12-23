@@ -22,14 +22,14 @@
         <RowConstraints />
     </rowConstraints>
     <children>
-        <Pane prefHeight="470.0" prefWidth="690.0" style="-fx-background-color: #0a1931;">
+        <Pane prefHeight="470.0" prefWidth="690.0" style="-fx-background-color: #000000;">
             <children>
-                <Label fx:id="displayUsername" alignment="CENTER" layoutX="207.0" layoutY="28.0" prefHeight="57.0" prefWidth="267.0" textAlignment="CENTER" textFill="WHITE">
+                <Label fx:id="displayUsername" alignment="CENTER" layoutX="96.0" layoutY="76.0" prefHeight="57.0" prefWidth="484.0" textAlignment="CENTER" textFill="#ffc947">
                     <font>
                         <Font name="Arial Rounded MT Bold" size="30.0" />
                     </font>
                 </Label>
-                <Button fx:id="playButton" alignment="BOTTOM_LEFT" layoutX="285.0" layoutY="186.0" mnemonicParsing="false" onAction="#playGame" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: #185adb; -fx-cursor: hand;" text="Play" textFill="#ffc947">
+                <Button fx:id="playButton" alignment="BOTTOM_LEFT" layoutX="285.0" layoutY="219.0" mnemonicParsing="false" onAction="#playGame" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: #185adb; -fx-cursor: hand;" text="Play" textFill="#ffc947">
                     <font>
                         <Font name="Calibri" size="23.0" />
                     </font>
@@ -67,18 +67,24 @@
                         <Font name="Calibri" size="36.0" />
                     </font>
                 </Text>
-                <ImageView fitHeight="28.0" fitWidth="22.0" layoutX="360.0" layoutY="197.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="28.0" fitWidth="22.0" layoutX="360.0" layoutY="230.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../images/icon.png" />
                     </image>
                 </ImageView>
-            <Label fx:id="userLabel" alignment="CENTER" layoutX="175.0" layoutY="85.0" prefHeight="57.0" prefWidth="331.0" text="Enter Username" textAlignment="CENTER" textFill="WHITE">
+            <Label fx:id="userLabel" alignment="CENTER" layoutX="175.0" layoutY="122.0" prefHeight="57.0" prefWidth="331.0" text="Enter Username" textAlignment="CENTER" textFill="#ffc947">
                <font>
                   <Font name="Arial Rounded MT Bold" size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="userName" layoutX="266.0" layoutY="142.0" />
+            <TextField fx:id="userName" layoutX="266.0" layoutY="179.0" />
             <ComboBox fx:id="userStat" layoutX="254.0" layoutY="431.0" onAction="#getUserStatistics" prefHeight="25.0" prefWidth="174.0" />
+            <Label fx:id="bestScoreLabel" alignment="BASELINE_LEFT" layoutX="464.0" prefHeight="57.0" prefWidth="210.0" text="Best Score: " textAlignment="CENTER" textFill="#185adb">
+               <font>
+                  <Font name="Arial Rounded MT Bold" size="18.0" />
+               </font>
+            </Label>
+            <Text fill="#ffc947" layoutX="570.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" />
             </children></Pane>
     </children>
     <!--<fx:include source="game.fxml" fx:id="gameController" />-->

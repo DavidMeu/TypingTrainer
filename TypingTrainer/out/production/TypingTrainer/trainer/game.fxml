@@ -42,7 +42,7 @@
                 <Font name="Calibri" size="31.0" />
             </font>
         </Text>
-        <TextField fx:id="userWord" alignment="CENTER" layoutX="238.0" layoutY="213.0" onKeyPressed="#startGame" prefHeight="42.0" prefWidth="214.0">
+        <TextField fx:id="userWord" alignment="CENTER" layoutX="236.0" layoutY="225.0" onKeyPressed="#startGame" prefHeight="42.0" prefWidth="214.0">
             <font>
                 <Font size="20.0" />
             </font>
@@ -62,7 +62,7 @@
                 <Image url="@../images/check.png" />
             </image>
         </ImageView>
-        <ImageView fx:id="wrong" fitHeight="51.0" fitWidth="49.0" layoutX="284.0" layoutY="302.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="wrong" fitHeight="51.0" fitWidth="49.0" layoutX="319.0" layoutY="278.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../images/wrong.png" />
             </image>

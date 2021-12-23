@@ -1,5 +1,6 @@
 package trainer;
 import javafx.beans.binding.Bindings;
+import javafx.event.Event;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +14,9 @@ import java.util.*;
 public class Controller implements Initializable {
 
     private DBController dbController;
+
+    @FXML
+    private Label bestScoreLabel;
 
     @FXML
     private Label displayUsername;
@@ -40,7 +44,21 @@ public class Controller implements Initializable {
             userStat.setPromptText("User Statistics");
             userStat.getItems().addAll(users);
 
+            //best score
+            String bestScore = dbController.bestScore();
+            if (bestScore != null){
+                bestScoreLabel.setText(bestScoreLabel.getText() + bestScore);
+            }
+            else {
+                bestScoreLabel.setVisible(false);
+            }
+
             displayUsername.textProperty().bind(Bindings.concat("Welcome ").concat(userName.textProperty()));
+            if (dbController.getCurrentUser() != null){
+                userName.setText(dbController.getCurrentUser());
+                userStat.getSelectionModel().select(dbController.getCurrentUser());
+                getUserStatistics(null);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

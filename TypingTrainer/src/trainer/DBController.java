@@ -14,11 +14,11 @@ public class DBController {
     private PreparedStatement ps;
 
     // tables queries
-    private final String users = "CREATE TABLE IF NOT EXISTS users (username varchar(45) NOT NULL primary key, joined_at date NOT NULL)";
+    private final String users = "CREATE TABLE IF NOT EXISTS users (username varchar(45) NOT NULL primary key, joined_at TIMESTAMP NOT NULL)";
     private final String usersStatistics = "CREATE TABLE IF NOT EXISTS statistics" +
             " (username varchar(45) NOT NULL references users(username), total_words int DEFAULT 0," +
             " correct_words int DEFAULT 0, invalid_words int DEFAULT 0, game_counter int DEFAULT 0, wpm int DEFAULT 0," +
-            " last_train date DEFAULT NULL)";
+            " last_train TIMESTAMP DEFAULT NULL)";
 
     //Current user
     private String currentUser;
@@ -122,6 +122,31 @@ public class DBController {
         ps.setObject(5, Math.round(newRes[1]*1.0/newRes[3]));
         ps.setObject(6, username);
         return ps.executeUpdate();
+    }
+
+    public String bestScore() throws SQLException {
+        int highestScore = 0;
+        int current_total = 0;
+        String res = null;
+        ps = this.connection.prepareStatement("SELECT username,total_words,wpm FROM statistics ORDER BY last_train");
+        ResultSet wpmResults = ps.executeQuery();
+        while (wpmResults.next()) {
+            if (wpmResults.getInt("wpm") > 0) {
+                if (wpmResults.getInt("wpm") > highestScore) {
+                    highestScore = wpmResults.getInt("wpm");
+                    current_total = wpmResults.getInt("total_words");
+                    res = wpmResults.getString("username");
+                }
+                else if (wpmResults.getInt("wpm") == highestScore &&
+                        wpmResults.getInt("total_words") < current_total) {
+                    highestScore = wpmResults.getInt("wpm");
+                    current_total = wpmResults.getInt("total_words");
+                    res = wpmResults.getString("username");
+                }
+
+            }
+        }
+        return res;
     }
 }
 

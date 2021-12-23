@@ -16,6 +16,7 @@ import java.net.URL;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public class GameController extends Controller {
 
@@ -49,17 +50,16 @@ public class GameController extends Controller {
     @FXML
     private Button playAgain;
 
-    List<String> words = new ArrayList<String>();
+    private List<String> words = new ArrayList<String>();
 
     // add words to array list
-    public void addToList() throws IOException {
-        String urlString = "http://web.stanford.edu/class/archive/cs/cs106l/cs106l.1102/assignments/dictionary.txt";
-        URL url = new URL(urlString);
-        Scanner scannerWords = new Scanner(url.openStream());
-        while (scannerWords.hasNextLine()) {
-            words.add(scannerWords.nextLine());
+    private List<String> readWordsFromURL(String url) throws IOException {
+        try (BufferedReader br
+                     = new BufferedReader(new InputStreamReader(new URL(url).openStream()))) {
+            return br
+                    .lines()
+                    .collect(Collectors.toCollection(ArrayList<String>::new));
         }
-        scannerWords.close();
     }
 
     public void toMainMenu(ActionEvent ae) throws IOException {
@@ -79,7 +79,7 @@ public class GameController extends Controller {
         playAgain.setDisable(true);
         seconds.setText(String.valueOf(timer));
         try {
-            addToList();
+            words = readWordsFromURL("http://web.stanford.edu/class/archive/cs/cs106l/cs106l.1102/assignments/dictionary.txt");
         } catch (IOException e) {
             e.printStackTrace();
         }
