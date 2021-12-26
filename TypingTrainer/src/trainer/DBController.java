@@ -13,14 +13,14 @@ public class DBController {
     private final String password = "Dmpost";
     private PreparedStatement ps;
 
-    // tables queries
+    // Create tables queries
     private final String users = "CREATE TABLE IF NOT EXISTS users (username varchar(45) NOT NULL primary key, joined_at TIMESTAMP NOT NULL)";
     private final String usersStatistics = "CREATE TABLE IF NOT EXISTS statistics" +
             " (username varchar(45) NOT NULL references users(username), total_words int DEFAULT 0," +
             " correct_words int DEFAULT 0, invalid_words int DEFAULT 0, game_counter int DEFAULT 0, wpm int DEFAULT 0," +
             " last_train TIMESTAMP DEFAULT NULL)";
 
-    //Current user
+    // Holding current user
     private String currentUser;
 
     private DBController() throws SQLException {
@@ -66,13 +66,16 @@ public class DBController {
         ps = this.connection.prepareStatement("SELECT 1 FROM users WHERE username=?");
         ps.setObject(1, username);
         ResultSet user = ps.executeQuery();
+
+        //If no results create user and his stat
         if (!user.next())
         {
-            //Init user
+            //Insert new user
             ps = this.connection.prepareStatement("INSERT INTO users VALUES (?,NOW())");
             ps.setObject(1, username);
             ps.executeUpdate();
-            //Init user statistics
+
+            //Insert new user statistics
             ps = this.connection.prepareStatement("INSERT INTO statistics(username) VALUES (?)");
             ps.setObject(1, username);
             ps.executeUpdate();
@@ -127,7 +130,7 @@ public class DBController {
     public String bestScore() throws SQLException {
         int highestScore = 0;
         int currentTotal = 0;
-        String res = null;
+        String bestUser = null;
         ps = this.connection.prepareStatement("SELECT username,total_words,wpm FROM statistics ORDER BY last_train");
         ResultSet wpmResults = ps.executeQuery();
         while (wpmResults.next()) {
@@ -135,18 +138,18 @@ public class DBController {
                 if (wpmResults.getInt("wpm") > highestScore) {
                     highestScore = wpmResults.getInt("wpm");
                     currentTotal = wpmResults.getInt("total_words");
-                    res = wpmResults.getString("username");
+                    bestUser = wpmResults.getString("username");
                 }
                 else if (wpmResults.getInt("wpm") == highestScore &&
                         wpmResults.getInt("total_words") < currentTotal) {
                     highestScore = wpmResults.getInt("wpm");
                     currentTotal = wpmResults.getInt("total_words");
-                    res = wpmResults.getString("username");
+                    bestUser = wpmResults.getString("username");
                 }
 
             }
         }
-        return res;
+        return bestUser;
     }
 }
 

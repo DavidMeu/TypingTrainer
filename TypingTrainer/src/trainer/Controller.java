@@ -44,6 +44,8 @@ public class Controller implements Initializable {
             List<String> users = dbController.getUsers();
             userStat.setPromptText("User Statistics");
             userStat.getItems().addAll(users);
+
+            // userName auto suggestions
             TextFields.bindAutoCompletion(userName,users).setMaxWidth(155);
 
             //best score
@@ -55,6 +57,7 @@ public class Controller implements Initializable {
                 bestScoreLabel.setVisible(false);
             }
 
+            // Data binding
             displayUsername.textProperty().bind(Bindings.concat("Welcome ").concat(userName.textProperty()));
             if (dbController.getCurrentUser() != null){
                 userName.setText(dbController.getCurrentUser());
