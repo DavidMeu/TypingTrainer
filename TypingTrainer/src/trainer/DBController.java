@@ -126,7 +126,7 @@ public class DBController {
 
     public String bestScore() throws SQLException {
         int highestScore = 0;
-        int current_total = 0;
+        int currentTotal = 0;
         String res = null;
         ps = this.connection.prepareStatement("SELECT username,total_words,wpm FROM statistics ORDER BY last_train");
         ResultSet wpmResults = ps.executeQuery();
@@ -134,13 +134,13 @@ public class DBController {
             if (wpmResults.getInt("wpm") > 0) {
                 if (wpmResults.getInt("wpm") > highestScore) {
                     highestScore = wpmResults.getInt("wpm");
-                    current_total = wpmResults.getInt("total_words");
+                    currentTotal = wpmResults.getInt("total_words");
                     res = wpmResults.getString("username");
                 }
                 else if (wpmResults.getInt("wpm") == highestScore &&
-                        wpmResults.getInt("total_words") < current_total) {
+                        wpmResults.getInt("total_words") < currentTotal) {
                     highestScore = wpmResults.getInt("wpm");
-                    current_total = wpmResults.getInt("total_words");
+                    currentTotal = wpmResults.getInt("total_words");
                     res = wpmResults.getString("username");
                 }
 
