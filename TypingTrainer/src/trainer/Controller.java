@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.*;
+import org.controlsfx.control.textfield.TextFields;
 
 public class Controller implements Initializable {
 
@@ -43,6 +44,7 @@ public class Controller implements Initializable {
             List<String> users = dbController.getUsers();
             userStat.setPromptText("User Statistics");
             userStat.getItems().addAll(users);
+            TextFields.bindAutoCompletion(userName,users).setMaxWidth(155);
 
             //best score
             String bestScore = dbController.bestScore();

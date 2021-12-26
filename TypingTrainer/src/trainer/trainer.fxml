@@ -77,7 +77,7 @@
                   <Font name="Arial Rounded MT Bold" size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="userName" layoutX="266.0" layoutY="179.0" />
+            <TextField fx:id="userName" layoutX="261.0" layoutY="179.0" prefHeight="25.0" prefWidth="155.0" />
             <ComboBox fx:id="userStat" layoutX="254.0" layoutY="431.0" onAction="#getUserStatistics" prefHeight="25.0" prefWidth="174.0" />
             <Label fx:id="bestScoreLabel" alignment="BASELINE_LEFT" layoutX="464.0" prefHeight="57.0" prefWidth="210.0" text="Best Score: " textAlignment="CENTER" textFill="#185adb">
                <font>
