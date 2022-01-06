@@ -23,7 +23,7 @@ public class GameController extends Controller {
 
     private int wordCounter = 0;
     private int first = 1;
-    private int timer = 1;
+    private int timer = 60;
     private DBController dbController;
 
     ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
@@ -107,6 +107,7 @@ public class GameController extends Controller {
                     try {
                         int updated = dbController.saveUserRes(currentUser, resArray);
                         if (updated == 1){
+                            //TODO: Check if user broke his own record and display it else don't.
                             String updatedRes = String.format("Updated %s result!", dbController.getCurrentUser());
                             secondProgramWord.setVisible(false);
                             programWord.setText(updatedRes);

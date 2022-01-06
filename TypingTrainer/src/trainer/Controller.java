@@ -1,6 +1,5 @@
 package trainer;
 import javafx.beans.binding.Bindings;
-import javafx.event.Event;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
