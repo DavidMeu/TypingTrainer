@@ -18,7 +18,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-public class GameController extends Controller {
+public class TrainerController extends Controller {
 
 
     private int wordCounter = 0;
@@ -64,7 +64,7 @@ public class GameController extends Controller {
 
     public void toMainMenu(ActionEvent ae) throws IOException {
         Main m = new Main();
-        m.changeScene("trainer.fxml");
+        m.changeScene("main.fxml");
     }
 
     @Override

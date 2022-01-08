@@ -74,7 +74,7 @@ public class Controller implements Initializable {
 
         String username = getUser(userName.getText().trim());
         if (!username.isEmpty()){
-            m.changeScene("game.fxml");
+            m.changeScene("trainer.fxml");
         }
     }
 

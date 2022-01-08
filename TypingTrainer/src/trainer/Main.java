@@ -17,7 +17,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         stg = primaryStage;
         primaryStage.setResizable(false);
-        Parent root = FXMLLoader.load(getClass().getResource("trainer.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
         primaryStage.setTitle("Typing Trainer");
         primaryStage.getIcons().add(new Image("images/icon.png"));
         primaryStage.setScene(new Scene(root, 690, 470));
