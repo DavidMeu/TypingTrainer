@@ -104,6 +104,7 @@ public class TrainerController extends Controller {
                     userWord.setText("Game over");
                     String currentUser = dbController.getCurrentUser();
                     int[] resArray = {countAll, counter, countAll-counter, 1};
+                    //Insert user game progress DATA
                     try {
                         int updated = dbController.saveUserRes(currentUser, resArray);
                         if (updated == 1){

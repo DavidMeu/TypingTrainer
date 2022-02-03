@@ -24,7 +24,7 @@ public class Controller implements Initializable {
     @FXML
     private Label userLabel;
     @FXML
-    private TextField userName;
+    public TextField userName;
 
     @FXML
     private ComboBox<String> userStat;
@@ -75,6 +75,15 @@ public class Controller implements Initializable {
         String username = getUser(userName.getText().trim());
         if (!username.isEmpty()){
             m.changeScene("trainer.fxml");
+        }
+    }
+
+    public void userProgress(ActionEvent ea) throws IOException, SQLException {
+        Main m = new Main();
+
+        String username = getUser(userName.getText().trim());
+        if (!username.isEmpty()){
+            m.changeScene("userProgress.fxml");
         }
     }
 

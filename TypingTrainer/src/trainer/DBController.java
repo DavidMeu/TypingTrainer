@@ -19,6 +19,7 @@ public class DBController {
             " (username varchar(45) NOT NULL references users(username), total_words int DEFAULT 0," +
             " correct_words int DEFAULT 0, invalid_words int DEFAULT 0, game_counter int DEFAULT 0, wpm int DEFAULT 0," +
             " last_train TIMESTAMP DEFAULT NULL)";
+    private final String userProgress = "";
 
     // Holding current user
     private String currentUser;
@@ -150,6 +151,11 @@ public class DBController {
             }
         }
         return bestUser;
+    }
+
+    public int userProgressData(String username) {
+        //All data from rows matching the user
+        return 123;
     }
 }
 
