@@ -4,6 +4,7 @@
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
@@ -18,18 +19,19 @@
         <RowConstraints />
     </rowConstraints>
     <children>
-        <Pane prefHeight="470.0" prefWidth="690.0">
+        <Pane prefHeight="559.0" prefWidth="681.0">
             <children>
             <Text fill="#ffc947" layoutX="570.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-            <LineChart fx:id="progressChart" layoutX="39.0" layoutY="48.0" prefHeight="346.0" prefWidth="588.0">
+            <LineChart fx:id="progressChart" layoutX="39.0" layoutY="36.0" prefHeight="391.0" prefWidth="588.0" title="User Progress">
               <xAxis>
-                <CategoryAxis side="BOTTOM" />
+                <CategoryAxis fx:id="dateAxis" label="Trained time" prefHeight="34.0" prefWidth="520.0" />
               </xAxis>
               <yAxis>
-                <NumberAxis side="LEFT" />
+                <NumberAxis fx:id="correctWordsAxis" autoRanging="false" label="Correct words" minorTickCount="1" minorTickLength="1.0" side="LEFT" tickLabelGap="1.0" tickLength="1.0" tickMarkVisible="false" tickUnit="1.0" />
               </yAxis>
             </LineChart>
-            <Button layoutX="280.0" layoutY="394.0" mnemonicParsing="false" onAction="#toMainMenu" text="Back to main screen" />
+            <Button layoutX="272.0" layoutY="14.0" mnemonicParsing="false" onAction="#toMainMenu" text="Back to main screen" />
+            <ComboBox fx:id="userProg" layoutX="266.0" layoutY="427.0" onAction="#getUserProgressData" prefWidth="150.0" />
             </children></Pane>
     </children>
 </GridPane>

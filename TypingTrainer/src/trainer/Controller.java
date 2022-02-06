@@ -78,13 +78,9 @@ public class Controller implements Initializable {
         }
     }
 
-    public void userProgress(ActionEvent ea) throws IOException, SQLException {
+    public void userProgress(ActionEvent ea) throws IOException {
         Main m = new Main();
-
-        String username = getUser(userName.getText().trim());
-        if (!username.isEmpty()){
-            m.changeScene("userProgress.fxml");
-        }
+        m.changeScene("userProgress.fxml");
     }
 
     public void getUserStatistics(ActionEvent ea) {

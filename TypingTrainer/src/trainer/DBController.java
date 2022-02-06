@@ -1,5 +1,7 @@
 package trainer;
 
+import javafx.scene.chart.XYChart;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +21,7 @@ public class DBController {
             " (username varchar(45) NOT NULL references users(username), total_words int DEFAULT 0," +
             " correct_words int DEFAULT 0, invalid_words int DEFAULT 0, game_counter int DEFAULT 0, wpm int DEFAULT 0," +
             " last_train TIMESTAMP DEFAULT NULL)";
-    private final String userProgress = "";
+    private final String usersTrains = "CREATE TABLE IF NOT EXISTS users_trains (username varchar(45) NOT NULL references users(username), correct_words int DEFAULT 0, trained TIMESTAMP NOT NULL)";
 
     // Holding current user
     private String currentUser;
@@ -28,6 +30,7 @@ public class DBController {
         this.connection = DriverManager.getConnection(url, username, password);
         this.createUsers();
         this.createUsersStatistics();
+        this.createUsersTrains();
     }
 
     public Connection getConnection() {
@@ -56,6 +59,16 @@ public class DBController {
     public void createUsersStatistics() {
         try {
             ps = this.connection.prepareStatement(usersStatistics);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void createUsersTrains() {
+        try {
+            ps = this.connection.prepareStatement(usersTrains);
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -112,6 +125,17 @@ public class DBController {
         };
     }
 
+    public XYChart.Series<String, Integer> getUserProgress(String username) throws SQLException {
+        XYChart.Series<String, Integer> userDataSeries = new XYChart.Series<String, Integer>();
+        ps = this.connection.prepareStatement("SELECT * FROM users_trains WHERE username=? ORDER BY trained");
+        ps.setObject(1, username);
+        ResultSet userTrains = ps.executeQuery();
+        while (userTrains.next()) {
+            userDataSeries.getData().add(new XYChart.Data<String, Integer>(userTrains.getString("trained"), userTrains.getInt("correct_words")));
+        }
+        return userDataSeries;
+    }
+
     public int saveUserRes(String username, int[] res) throws SQLException {
         int[] currentRes = this.getUserStatistics(username);
         int[] newRes = IntStream.range(0, res.length)
@@ -126,6 +150,13 @@ public class DBController {
         ps.setObject(5, Math.round(newRes[1]*1.0/newRes[3]));
         ps.setObject(6, username);
         return ps.executeUpdate();
+    }
+
+    public void saveUserTrain(String username, int correct_words) throws SQLException {
+        ps = this.connection.prepareStatement("INSERT INTO users_trains VALUES (?,?,NOW())");
+        ps.setObject(1, username);
+        ps.setObject(2, correct_words);
+        ps.executeUpdate();
     }
 
     public String bestScore() throws SQLException {
@@ -151,11 +182,6 @@ public class DBController {
             }
         }
         return bestUser;
-    }
-
-    public int userProgressData(String username) {
-        //All data from rows matching the user
-        return 123;
     }
 }
 

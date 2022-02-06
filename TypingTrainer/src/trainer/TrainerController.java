@@ -113,6 +113,7 @@ public class TrainerController extends Controller {
                             secondProgramWord.setVisible(false);
                             programWord.setText(updatedRes);
                         }
+                        dbController.saveUserTrain(currentUser, counter);
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
