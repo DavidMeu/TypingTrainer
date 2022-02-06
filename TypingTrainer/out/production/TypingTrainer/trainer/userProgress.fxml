@@ -24,7 +24,7 @@
             <Text fill="#ffc947" layoutX="570.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" />
             <LineChart fx:id="progressChart" layoutX="39.0" layoutY="36.0" prefHeight="391.0" prefWidth="588.0" title="User Progress">
               <xAxis>
-                <CategoryAxis fx:id="dateAxis" label="Trained time" prefHeight="34.0" prefWidth="520.0" />
+                <CategoryAxis fx:id="dateAxis" label="Trained times" prefHeight="34.0" prefWidth="520.0" />
               </xAxis>
               <yAxis>
                 <NumberAxis fx:id="correctWordsAxis" autoRanging="false" label="Correct words" minorTickCount="1" minorTickLength="1.0" side="LEFT" tickLabelGap="1.0" tickLength="1.0" tickMarkVisible="false" tickUnit="1.0" />
